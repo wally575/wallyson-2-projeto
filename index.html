@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title> Homem de Ferro</title>
+  <style>
+    /* Estilo geral */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #1b1b1b;
+      color: #fff;
+    }
+
+    /* Cabeçalho */
+    .header-container {
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(90deg, #ff0000, #8b0000);
+    }
+
+    .logo {
+      font-size: 2.5em;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Container da história */
+    .historia-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .caixa {
+      background-color: rgba(255, 69, 0, 0.8); /* Laranja translúcido */
+      padding: 20px;
+      border-radius: 10px;
+      margin: 15px;
+      width: 80%;
+      max-width: 500px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+
+    .caixa img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .botoes {
+      margin-top: 20px;
+    }
+
+    .botao {
+      background-color: #ff0000;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      margin: 5px;
+    }
+
+    .botao:hover {
+      background-color: #8b0000;
+    }
+  </style>
+</head>
+<body>
+  <div class="header-container">
+    <div class="logo">Homem de Ferro</div>
+  </div>
+
+  <div class="historia-container">
+    <div class="caixa" id="etapa">
+      <img src="https://www.einerd.com.br/wp-content/uploads/2019/04/Tony-Stark-sequestro-1.jpg" alt="Tony Stark" />
+      <p id="texto">Tony Stark, o gênio bilionário, é sequestrado no Afeganistão.</p>
+    </div>
+
+    <div class="botoes" id="botoes">
+      <button class="botao" onclick="escolha(1)">Tentar escapar</button>
+      <button class="botao" onclick="escolha(2)">Cooperar com os sequestradores</button>
+    </div>
+  </div>
+
+  <script>
+    const etapas = {
+      0: {
+        texto: "Tony Stark, o gênio bilionário, é sequestrado no Afeganistão.",
+        imagem: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDd0-7DNE8N7Jm_bpgFcC3RYAB7y8dUBOP0xXqyS6WpOXhGZ7m2mOBxXjH1qLCHkbFdCd3FrUVZ27-1wFZ97fD6p4HKt7svD8OcCdtEUdr7Tpq9U7EYCAUHFxfiQ51Ph_wtYcEjxW0fmGI/s1600/20308268.jpg-r_640_600-b_1_D6D6D6-f_jpg-q_x-xxyxx.jpg",
+        escolhas: [
+          { texto: "Tentar escapar", proxima: 1 },
+          { texto: "Cooperar com os sequestradores", proxima: 2 },
+        ],
+      },
+      1: {
+        texto: "Tony constrói uma armadura improvisada e tenta escapar.",
+        imagem: "https://i0.wp.com/cinegrandiose.com/wp-content/uploads/Iron-Man-1.png?fit=960%2C540&ssl=1",
+        escolhas: [
+          { texto: "Usar força bruta para escapar", proxima: 3 },
+          { texto: "Esperar o momento certo para fugir", proxima: 4 },
+        ],
+      },
+      2: {
+        texto: "Tony decide cooperar, mas secretamente planeja sua fuga.",
+        imagem: "https://rollingstone.com.br/media/uploads/homem_de_ferro_reproducao.jpg",
+        escolhas: [
+          { texto: "Continuar cooperando", proxima: 5 },
+          { texto: "Iniciar um plano de sabotagem", proxima: 6 },
+        ],
+      },
+      3: {
+        texto: "Tony usa sua armadura para abrir caminho, mas é gravemente ferido.",
+        imagem: "https://qph.cf2.quoracdn.net/main-qimg-edc657365a869173058aed6befa2fc28-lq",
+        escolhas: [],
+      },
+      4: {
+        texto: "Tony espera e consegue fugir sem ser detectado.",
+        imagem: "https://www.einerd.com.br/wp-content/uploads/2019/08/robert-downey-jr-tony-stark-e1566560563589-890x606.jpg",
+        escolhas: [],
+      },
+      5: {
+        texto: "Tony ganha a confiança dos sequestradores, mas fica sem saída.",
+        imagem: "https://acessocultural.com.br/wp-content/uploads/2019/03/homem-de-ferro-3-1800x1216.jpg",
+        escolhas: [],
+      },
+      6: {
+        texto: "Tony sabota as operações dos sequestradores e foge com sucesso.",
+        imagem: "https://br.web.img2.acsta.net/r_640_360/medias/nmedia/18/87/35/19/19421295_fa2.jpg",
+        escolhas: [],
+      },
+    };
+
+    let etapaAtual = 0;
+
+    function atualizarEtapa() {
+      const etapa = etapas[etapaAtual];
+      document.getElementById("texto").textContent = etapa.texto;
+      document.querySelector(".caixa img").src = etapa.imagem;
+
+      const botoesContainer = document.getElementById("botoes");
+      botoesContainer.innerHTML = "";
+
+      etapa.escolhas.forEach((escolha) => {
+        const botao = document.createElement("button");
+        botao.className = "botao";
+        botao.textContent = escolha.texto;
+        botao.onclick = () => escolhaProxima(etapaAtual, escolha.proxima);
+        botoesContainer.appendChild(botao);
+      });
+    }
+
+    function escolhaProxima(atual, proxima) {
+      etapaAtual = proxima;
+      atualizarEtapa();
+    }
+
+    function escolha(opcao) {
+      etapaAtual = opcao;
+      atualizarEtapa();
+    }
+
+    // Inicializar com a primeira etapa
+    atualizarEtapa();
+  </script>
+</body>
+</html>
